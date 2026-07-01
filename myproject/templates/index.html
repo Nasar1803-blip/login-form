@@ -1,0 +1,94 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="icon" href="C:\Users\vinot\Downloads\window.png" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Login</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+        />
+
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter Password"
+        />
+        <div class="show-password">
+          <input type="checkbox" id="showPassword" />
+          <label for="showPassword">Show Password</label>
+        </div>
+        <input
+          type="text"
+          name="phone"
+          id="phone"
+          maxlength="10"
+          placeholder="Phone Number"
+        />
+        <p id="msg"></p>
+        <button type="submit">Login</button>
+      </form>
+      <div class="register">
+        Don't have an account?
+        <a href="/register/">Register</a>
+      </div>
+    </div>
+    <script>
+      // Phone Number -> Numbers only
+      const phone = document.getElementById("phone");
+
+      phone.addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "");
+      });
+
+      // Password Validation
+
+      const password = document.getElementById("password");
+      const msg = document.getElementById("msg");
+
+      password.addEventListener("input", function () {
+        let value = password.value;
+
+        let valid =
+          value.length >= 8 &&
+          /[A-Z]/.test(value) &&
+          /[a-z]/.test(value) &&
+          /[0-9]/.test(value) &&
+          /[@$!%*?&]/.test(value);
+
+        if (value.length === 0) {
+          msg.innerHTML = "";
+        } else if (valid) {
+          msg.innerHTML = "✅ Strong Password";
+          msg.style.color = "green";
+        } else {
+          msg.innerHTML =
+            "❌ Min 8 chars, 1 Uppercase, 1 Lowercase, 1 Number, 1 Special Character";
+          msg.style.color = "red";
+        }
+      });
+      const showPassword = document.getElementById("showPassword");
+
+      showPassword.addEventListener("change", function () {
+        if (this.checked) {
+          password.type = "text";
+        } else {
+          password.type = "password";
+        }
+      });
+    </script>
+  </body>
+</html>

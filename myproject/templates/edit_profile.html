@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Edit Profile</title>
+  </head>
+  <body>
+    <h2>Edit Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <input type="text" name="username" value="{{ request.user.username }}" />
+
+      <br /><br />
+
+      <input type="email" name="email" value="{{ request.user.email }}" />
+
+      <br /><br />
+
+      <label>Profile Photo</label>
+      <input type="file" name="image" accept="image/*" />
+      <button type="submit">Save Changes</button>
+    </form>
+  </body>
+</html>
